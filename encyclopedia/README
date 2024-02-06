@@ -1,0 +1,23 @@
+Some notes:
+1. In order to transform from .md (markdown) to .html, we use the library markdown of Python
+However, after transforming, when we insert this content into a .html file:
+    {{htmlContent | safe}}
+{% comment %} 
+By default, when substituting a value in a Django template, Django HTML-escapes 
+the value to avoid outputting unintended HTML. If you want to allow for an HTML 
+string to be outputted, you can do so with the safe filter
+(as by adding |safe after the variable name you’re substituting). 
+{% endcomment %}
+
+2. Implement a <textarea> tag in a Django form by using
+attribute: widget = forms.Textarea
+
+3. BeautifulSoup is commonly used in Django projects, especially when dealing with HTML content 
+manipulation and parsing. While Django itself provides tools for generating HTML templates and
+forms, BeautifulSoup offers more advanced capabilities for parsing and manipulating HTML content.
+4. https://docs.python.org/3/howto/regex.html: regular expressions in Python
+The RE is passed to re.compile() as a string. REs are handled as strings because regular expressions 
+aren’t part of the core Python language, and no special syntax was created for expressing them. 
+(There are applications that don’t need REs at all, so there’s no need to bloat the language specification
+ by including them.) Instead, the re module is simply a C extension module included with Python, just like
+  the socket or zlib modules.

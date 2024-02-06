@@ -1,0 +1,24 @@
+{% extends "encyclopedia/layout.html" %} 
+{% block title%} 
+{{title}} 
+{% endblock%} 
+{% block body %} 
+
+<form method = "POST" action = "{% url 'edit' title %}">
+    {% csrf_token%}
+    <textarea name = "content">
+    {{htmlContent | safe}} 
+    </textarea>
+    <button type="submit">Save</button>
+</form>
+{% comment %} By default, when
+substituting a value in a Django template, Django HTML-escapes the value to
+avoid outputting unintended HTML. If you want to allow for an HTML string to be
+outputted, you can do so with the safe filter (as by adding |safe after the
+variable name you’re substituting). {% endcomment %} 
+{% endblock %}
+{% block nav%}
+<div>
+    <a href ="{%url 'edit' title%}">Edit Page</a>
+</div>
+{% endblock %}
