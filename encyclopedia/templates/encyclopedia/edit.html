@@ -6,9 +6,7 @@
 
 <form method = "POST" action = "{% url 'edit' title %}">
     {% csrf_token%}
-    <textarea name = "content">
-    {{htmlContent | safe}} 
-    </textarea>
+    <textarea name="content">{{htmlContent | safe}}</textarea>
     <button type="submit">Save</button>
 </form>
 {% comment %} By default, when

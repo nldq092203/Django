@@ -45,30 +45,30 @@ def entry(request, title):
 
 def search(request):
     if request.method == "POST":
-        query = request.POST.get("q")
-        print(query)
+        query = request.POST.get("q").rstrip()
         entries = util.list_entries()
         entriesLower = [entry.lower() for entry in entries]
         print(entriesLower)
-        if query.lower() in entriesLower:
+        for i in range(len(entries)):
+            if query.lower() == entriesLower[i]:
             # return render(
             #     request,
             #     "encyclopedia/entry.html",
             #     {"htmlContent": markdown(util.get_entry(query)), "title": query},
             # )
-            return HttpResponseRedirect(reverse("entry", kwargs={"title": query}))
+                return HttpResponseRedirect(reverse("entry", kwargs={"title": entries[i]}))
 
+        
+        listEntries = []
+        for entry in entries:
+            if query.lower() in entry.lower():
+                listEntries.append(entry)
+        if listEntries:
+            return render(
+                request, "encyclopedia/index.html", {"entries": listEntries}
+            )
         else:
-            listEntries = []
-            for entry in entries:
-                if query.lower() in entry.lower():
-                    listEntries.append(entry)
-            if listEntries:
-                return render(
-                    request, "encyclopedia/index.html", {"entries": listEntries}
-                )
-            else:
-                return render(request, "encyclopedia/error.html")
+            return render(request, "encyclopedia/error.html")
 
 
 class NewPage(forms.Form):
@@ -108,6 +108,7 @@ def edit(request, title):
         )
     else:
         form = request.POST
+        print(form["content"])
         util.save_entry(title, form["content"])
         return HttpResponseRedirect(reverse("entry", kwargs={"title" : title}))
 
